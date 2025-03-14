@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "target": "es2022",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "module": "commonjs",
+    "rootDir": "src",
+    "moduleResolution": "node",
+    "baseUrl": "src",
+    "paths": {
+      "@application/*": ["application/*"],
+      "@config/*": ["config/*"],
+      "@logger/*": ["logger/*"],
+      "@di/*": ["di/*"],
+      "@infra/*": ["infra/*"],
+      "@presentation/*": ["presentation/*"],
+      "@domain/*": ["domain/*"],
+      "@shared/*": ["shared/*"],
+      "@utils/*": ["utils/*"],
+      "@src/*": ["./*"]
+    },
+    "outDir": "dist",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictPropertyInitialization": true,
+    "noImplicitAny": true
+  },
+  "include": ["src"]
+}

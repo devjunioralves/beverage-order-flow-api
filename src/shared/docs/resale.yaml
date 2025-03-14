@@ -1,0 +1,54 @@
+paths:
+  /v1/resale:
+    post:
+      summary: Create a new resale
+      tags:
+        - Resale
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cnpj:
+                  type: string
+                  example: '12345678000195'
+                corporateName:
+                  type: string
+                  example: 'Company Ltda'
+                tradeName:
+                  type: string
+                  example: 'My Company'
+                email:
+                  type: string
+                  format: email
+                  example: 'contact@company.com'
+                phones:
+                  type: array
+                  items:
+                    type: string
+                    example: '11987654321'
+                contacts:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        example: 'John Doe'
+                      isPrimary:
+                        type: boolean
+                        example: true
+                deliveryAddresses:
+                  type: array
+                  items:
+                    type: string
+                    example: 'Rua Exemplo, 123, São Paulo - SP'
+      responses:
+        '201':
+          description: Resale successfully created
+        '400':
+          description: Validation error
+        '500':
+          description: Internal server error

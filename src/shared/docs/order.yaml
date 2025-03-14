@@ -1,0 +1,53 @@
+paths:
+  /v1/order:
+    post:
+      summary: Create a new order
+      tags:
+        - Order
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                resaleId:
+                  type: string
+                  example: 'uuid-resale'
+                items:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      productId:
+                        type: string
+                        example: 'beer-001'
+                      quantity:
+                        type: integer
+                        example: 10
+      responses:
+        '201':
+          description: Order successfully created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 'order-uuid'
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        productId:
+                          type: string
+                          example: 'beer-001'
+                        quantity:
+                          type: integer
+                          example: 10
+        '400':
+          description: Validation error
+        '500':
+          description: Internal server error
