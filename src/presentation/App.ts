@@ -3,6 +3,7 @@ import { tokens } from '@di/tokens'
 import { RabbitMQBroker } from '@infra/broker/RabbitMQBroker'
 import { RabbitMQConsumer } from '@infra/broker/RabbitMQConsumer'
 import { setupSwagger } from '@shared/docs/swagger'
+import logger from '@shared/logging/Logger'
 import bodyParser from 'body-parser'
 import cors from 'cors'
 import * as dotenv from 'dotenv'
@@ -44,11 +45,11 @@ const rabbitMQConsumer = container.resolve<RabbitMQConsumer>(
 const rabbitMQBroker = container.resolve<RabbitMQBroker>(tokens.MessageBroker)
 
 rabbitMQBroker.connect().then(() => {
-  console.log('✅ RabbitMQ Broker (Producer) conectado com sucesso')
+  logger.info({ message: '✅ RabbitMQ Broker conectado com sucesso.' })
 })
 
 rabbitMQConsumer.start().then(() => {
-  console.log('✅ RabbitMQ Consumer iniciado e esperando por mensagens...')
+  logger.info({ message: '✅ RabbitMQ Consumer iniciado com sucesso.' })
 })
 
 export default app
