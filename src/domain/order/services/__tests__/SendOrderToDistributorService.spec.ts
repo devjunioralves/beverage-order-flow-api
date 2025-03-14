@@ -13,6 +13,7 @@ describe('SendOrderToDistributorService', () => {
     mockOrderRepository = {
       create: jest.fn(),
       findById: jest.fn(),
+      updateStatus: jest.fn(),
     } as jest.Mocked<IOrderRepository>
 
     mockDistributorRepository = {
