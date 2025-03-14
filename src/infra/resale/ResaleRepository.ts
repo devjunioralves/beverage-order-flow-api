@@ -19,7 +19,16 @@ export class ResaleRepository implements IResaleRepository {
     return resale
   }
 
-  async findByCnpj(cnpj: string): Promise<IResale | null> {
-    return this.ormRepository.findOne({ where: { cnpj } })
+  async findByCnpjOrEmail(
+    cnpj: string,
+    email: string
+  ): Promise<IResale | null> {
+    return this.ormRepository.findOne({
+      where: [{ cnpj }, { email }],
+    })
+  }
+
+  async findById(id: string): Promise<IResale | null> {
+    return this.ormRepository.findOneBy({ id })
   }
 }

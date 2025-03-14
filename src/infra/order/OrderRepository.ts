@@ -1,6 +1,6 @@
 import { IOrderRepository } from '@domain/order/infra/IOrderRepository'
 import { Order } from '@domain/order/models/Order'
-import { IOrder } from '@domain/order/types/IOrder'
+import { EOrderStatus, IOrder } from '@domain/order/types/IOrder'
 import { redisClient } from '@infra/cache/Redis'
 import { injectable } from 'tsyringe'
 import { Repository } from 'typeorm'
@@ -38,5 +38,10 @@ export class OrderRepository implements IOrderRepository {
     await redisClient.setex(`order:${order.id}`, 3600, JSON.stringify(order))
 
     return order
+  }
+
+  async updateStatus(id: string, status: EOrderStatus): Promise<void> {
+    await this.ormRepository.update(id, { status })
+    await redisClient.del(`order:${id}`)
   }
 }

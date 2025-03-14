@@ -1,4 +1,5 @@
 import { tokens } from '@di/tokens'
+import { BaseError } from '@shared/exceptions/BaseError'
 import { inject, injectable } from 'tsyringe'
 import { IResaleRepository } from '../infra/IResaleRepository'
 import { IResale } from '../types/IResale'
@@ -12,11 +13,19 @@ export default class ResaleService implements IResaleService {
   ) {}
 
   async create(data: IResale): Promise<IResale> {
-    const resale = await this.resaleRepository.create(data)
-    return resale
-  }
+    const existingResale = await this.resaleRepository.findByCnpjOrEmail(
+      data.cnpj,
+      data.email
+    )
 
-  async findByCnpj(cnpj: string): Promise<IResale | null> {
-    return this.resaleRepository.findByCnpj(cnpj)
+    if (existingResale) {
+      throw new BaseError({
+        message: 'A resale with this CNPJ or email already exists.',
+        name: 'DuplicateEntryError',
+        statusCode: 409,
+      })
+    }
+
+    return this.resaleRepository.create(data)
   }
 }

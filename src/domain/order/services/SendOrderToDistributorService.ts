@@ -1,6 +1,7 @@
 import { tokens } from '@di/tokens'
 import { IOrderRepository } from '@domain/order/infra/IOrderRepository'
 import { IDistributorRepository } from '@domain/order/types/IDistributorRepository'
+import { EOrderStatus } from '@domain/order/types/IOrder'
 import logger from '@shared/logging/Logger'
 import { inject, injectable } from 'tsyringe'
 import { IOrder, IOrderItem } from '../types/IOrder'
@@ -52,17 +53,36 @@ export default class SendOrderToDistributorService
       })
 
       if (!response.success) {
+        await this.orderRepository.updateStatus(
+          order.id as string,
+          EOrderStatus.FAILED
+        )
         logger.error({
           message: 'Failed to send order to distributor',
           orderId: order.id,
         })
         throw new Error('Failed to send order to Distributor')
       }
+
+      await this.orderRepository.updateStatus(
+        order.id as string,
+        EOrderStatus.SENT
+      )
+      logger.info({
+        message: 'Order successfully sent to distributor',
+        orderId: order.id,
+        orderNumber: response.orderNumber,
+      })
+
       return {
         orderNumber: response.orderNumber || '',
         confirmedItems: response.confirmedItems || [],
       }
     } catch (error: any) {
+      await this.orderRepository.updateStatus(
+        order.id as string,
+        EOrderStatus.FAILED
+      )
       logger.error({
         message: 'Unexpected error sending order to distributor',
         orderId: order.id,
