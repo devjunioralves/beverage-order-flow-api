@@ -13,7 +13,10 @@ paths:
               properties:
                 resaleId:
                   type: string
-                  example: 'uuid-resale'
+                  example: 'c89ade09-46cd-49e1-b6f1-79f6947d1e9c'
+                customerId:
+                  type: string
+                  example: 'd4f90baf-8348-4111-a3e0-8c8abb9f6203'
                 items:
                   type: array
                   items:
@@ -21,10 +24,10 @@ paths:
                     properties:
                       productId:
                         type: string
-                        example: 'beer-001'
+                        example: '78910'
                       quantity:
                         type: integer
-                        example: 10
+                        example: 900
       responses:
         '201':
           description: Order successfully created
@@ -43,10 +46,10 @@ paths:
                       properties:
                         productId:
                           type: string
-                          example: 'beer-001'
+                          example: '78910'
                         quantity:
                           type: integer
-                          example: 10
+                          example: 900
         '400':
           description: Validation error
         '500':

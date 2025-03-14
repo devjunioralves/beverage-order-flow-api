@@ -71,9 +71,7 @@ describe('ResaleCreateController', () => {
     const response: { statusCode: number; body: any } | Record<string, any> =
       await controller.execute(request)
 
-    expect(response.error.message.value).toBe(
-      '"cnpj" contains an invalid value'
-    )
+    expect(response.error.message.value).toBe('CNPJ must be exactly 14 digits.')
   })
 
   it('should return validation error when primary contact is not provided', async () => {
@@ -95,7 +93,9 @@ describe('ResaleCreateController', () => {
     const response: { statusCode: number; body: any } | Record<string, any> =
       await controller.execute(request)
 
-    expect(response.error.message.value).toBe('"contacts" is required')
+    expect(response.error.message.value).toBe(
+      'At least one contact must be marked as primary.'
+    )
   })
 
   it('should return error when service fails', async () => {

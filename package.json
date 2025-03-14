@@ -1,8 +1,8 @@
 {
-  "name": "Clinicorp-Challenge",
+  "name": "bevereage-order-flow-api",
   "version": "1.0.0",
   "main": "index.js",
-  "author": "Junior Alves <jrwanderley17@gmail.com>",
+  "author": "Junior Alves <junioratrindade@gmail.com>",
   "license": "MIT",
   "scripts": {
     "dev": "nodemon --inspect --exec 'ts-node -r tsconfig-paths/register src/index.ts' --verbose",
